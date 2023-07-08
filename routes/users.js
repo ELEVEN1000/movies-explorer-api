@@ -3,12 +3,9 @@ const {
   getCurrentUser,
   updateUserInfo,
 } = require('../controllers/users');
-const {
-  validateCurrentUser,
-  validateUpdateUser,
-} = require('../middlewares/validation');
+const { validateUpdateUser } = require('../middlewares/validation');
 
-router.get('/me', validateCurrentUser, getCurrentUser);
+router.get('/me', getCurrentUser);
 
 router.patch('/me', validateUpdateUser, updateUserInfo);
 

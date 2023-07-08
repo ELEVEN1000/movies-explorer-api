@@ -60,12 +60,10 @@ const updateUserInfo = (req, res, next) => {
       runValidators: true,
     },
   )
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Пользователь с указанным _id не найден.');
-      }
-      res.send({ data: user });
+    .orFail(() => {
+      throw new NotFoundError('Пользователь не найден');
     })
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при обновлении профиля.'));
